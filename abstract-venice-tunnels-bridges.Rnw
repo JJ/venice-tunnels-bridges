@@ -8,6 +8,13 @@ Dept. of Computer Engineering, Automatics and Robotics + CITIC; University of Gr
 {\tt jmerelo@ugr.es}
 }
 
+\author{b}{Uri Hershberg}
+
+\affiliation{a}{
+Dept. of Human Biology, University of Haifa, Israel;
+{\tt uri@sci.haifa.ac.il}
+}
+
 \title{Over the bridge, under the door: analyzing the role of bridges and underpasses in the complex network of Venetian streets}
 
 \abstract{
