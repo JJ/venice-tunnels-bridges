@@ -15,7 +15,7 @@ Dept. of Human Biology, University of Haifa, Israel;
 {\tt uri@sci.haifa.ac.il}
 }
 
-\title{Over the bridge, under the door: analyzing the role of bridges and underpasses in the complex network of Venetian streets}
+\title{Over the bridge, under the gate: analyzing the role of bridges and underpasses in the complex network of Venetian streets}
 
 \abstract{
 <<statphys.abs, echo=FALSE, message=F, fig.height=4, fig.pos="h", fig.cap="Venice footwalk graph. Edge color is red for bridges, blue for underpasses or passages and yellow for everything else.">>=
