@@ -1,0 +1,30 @@
+\documentclass[12pt,a4paper]{book}
+\usepackage{statphys}[latest]
+
+\author*{a}{J. J. Merelo}
+
+\affiliation{a}{
+Dept. of Computer Engineering, Automatics and Robotics + CITIC; University of Granada, Spain;
+{\tt jmerelo@ugr.es}
+}
+
+\title{Over the bridge, under the door: analyzing the role of bridges and underpasses in the complex network of Venetian streets}
+
+\abstract{
+<<statphys.abs, echo=FALSE, message=F, fig.height=4, fig.pos="h", fig.cap="Venice footwalk graph. Edge color is red for bridges, yellow for everything else.">>=
+library(igraph)
+load("venice.graph.undirected.Rdata")
+E(venice.graph.undirected)[ E(venice.graph.undirected)$sotoportego != FALSE ]$color <- "blue"
+par(mar=c(0,0,0,0)+.1)
+plot(venice.graph.undirected,vertex.label=NA,vertex.shape="none", fig.pos="h!tb", edge.width=1)
+graph.edges <- E(venice.graph.undirected)
+number.of.edges <- length(graph.edges)
+percent.bridges <- round(length(graph.edges[graph.edges$bridge == T])*100/number.of.edges,2)
+percent.sotoportegos <- round(length(graph.edges[graph.edges$sotoportego != F])*100/number.of.edges,2)
+@
+
+
+}
+
+\begin{document}
+\end{document}
