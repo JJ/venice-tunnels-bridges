@@ -23,7 +23,7 @@ percent.bridges <- round(length(graph.edges[graph.edges$bridge == T])*100/number
 percent.sotoportegos <- round(length(graph.edges[graph.edges$sotoportego != F])*100/number.of.edges,2)
 @
 
-
+Venice, besides being known for its water channels, is a fully pedestrian city which has barely changed its configuration in the last 500 years. In order to reach any place in the city, several hundred bridges link islands; bridges are one of the few changes in the network that have occurred, which clearly shows its role in the urban configuration. Besides, {\em sotoportegos}, underpasses and passages are another salient urban feature. A high percentage of edges belong to one or another class, as shown in Figure \ref{fig:statphys.abs}; bridges are \Sexpr{percent.bridges}\% of the total number of (undirected) edges, while sotoportegos take \Sexpr{percent.sotoportegos}\%. Here we will focus on the role these two urban features have in the complex network of Venice streets, extracted from OpenStreetMap, what is their status, and which specific elements have the highest centrality, trying to explain via historical and statistical research why that is so. We wil also try see, in general, which ones have the highest importance within the network, as compared to the other edges.
 }
 
 \begin{document}
