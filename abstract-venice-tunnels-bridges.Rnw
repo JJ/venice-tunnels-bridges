@@ -31,7 +31,7 @@ percent.sotoportegos <- round(length(graph.edges[graph.edges$sotoportego != F])*
 @
 
 Venice, renowned for its water channels, is a largely pedestrianized city that has barely changed its configuration in the last 500 years. Several hundred bridges link the islands of Venice represent also one of the few significant changes to the city's network over time, highlighting their crucial role in its urban configuration. Notably, Venice's unique character stems from the largely unplanned and self-organizing nature of its development, which makes it an intriguing subject for study.
-{\em Sotoportegos} (covered walkways) are another prominent urban feature, as shown in Figure \ref{fig:statphys.abs}; bridges account for \Sexpr{percent.bridges}\% of the total number of edges, while {\em sotoportegos} take \Sexpr{percent.sotoportegos}\%. Here we will focus on the role these two urban features have in the complex network of Venice streets, what is their status, and which specific type of elements have the highest centrality, trying to explain via historical and statistical research why that is so
+{\em Sotoportegos} (covered walkways) are another prominent urban feature, as shown in Figure \ref{fig:statphys.abs}; bridges account for \Sexpr{percent.bridges}\% of the total number of edges, while {\em sotoportegos} take \Sexpr{percent.sotoportegos}\%. Here we will focus on the role these two urban features have in the complex network of Venice streets, what is their status, and which specific type of elements have the highest centrality, trying to explain via historical and statistical research why that is so.
 }
 
 \begin{document}
