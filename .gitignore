@@ -315,3 +315,4 @@ figure/
 # Rstudio
 *.Rproj*
 .Rproj.user
+.Rhistory
