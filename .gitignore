@@ -314,3 +314,4 @@ figure/
 
 # Rstudio
 *.Rproj*
+.Rproj.user
