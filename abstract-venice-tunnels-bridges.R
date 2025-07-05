@@ -1,5 +1,33 @@
 ## ----statphys.abs, echo=FALSE, message=F, fig.height=4, fig.pos="h", fig.cap="Venice street graph. Edge color is red for bridges, blue for underpasses or passages and yellow for everything else."----
 library(igraph)
+library(stringr)
+
+process_name_vector <- function(name_vector) {
+  parsed_strings <- sapply(name_vector, function(x) {
+    # 1. Remove leading and trailing brackets
+    x_clean <- str_remove_all(x, "^\\[|\\]$")
+
+    # 2. Split by comma
+    elements <- unlist(str_split(x_clean, ",\\s*"))
+
+    # 3. Remove surrounding single or double quotes (escaped or unescaped)
+    elements_clean <- str_replace_all(elements, "^(\"|')|(\"|')$", "")
+
+    # 4. Trim any residual whitespace
+    elements_clean <- str_trim(elements_clean)
+
+    # 5. Concatenate with →
+    paste(elements_clean, collapse = " → ")
+  })
+
+  # 6. Concatenate with " - " if multiple strings
+  paste(parsed_strings, collapse = " -\n")
+}
+
+
+
+
+
 load("venice.graph.undirected.Rdata")
 E(venice.graph.undirected)[ E(venice.graph.undirected)$sotoportego != FALSE ]$color <- rgb(0,0,1,.5)
 E(venice.graph.undirected)[ E(venice.graph.undirected)$bridge != FALSE ]$color <- rgb(1,0,0,.5)
@@ -34,11 +62,16 @@ top5_bridge <- bridge_edges[order(E(venice.graph.undirected)[bridge_edges]$betwe
 E(venice.graph.undirected)$label <- NA
 
 # Assign labels to the selected edges
-E(venice.graph.undirected)[top5_soto]$label <- E(venice.graph.undirected)[top5_soto]$name
-E(venice.graph.undirected)[top5_bridge]$label <- E(venice.graph.undirected)[top5_bridge]$name
+E(venice.graph.undirected)[top5_soto]$label <- paste(" 🛤️ ",
+  sapply(E(venice.graph.undirected)[top5_soto]$name, process_name_vector))
+
+E(venice.graph.undirected)[top5_bridge]$label <- paste( "🔺",
+  sapply(E(venice.graph.undirected)[top5_bridge]$name, process_name_vector))
+
 
 # Plot with labels visible at high resolution
 par(mar=c(0,0,0,0)+.1)
+
 plot(venice.graph.undirected,
      vertex.label=NA,
      vertex.shape="none",
@@ -48,6 +81,6 @@ plot(venice.graph.undirected,
      vertex.size=0,
      vertex.frame.color=NA,
      edge.label = E(venice.graph.undirected)$label,
-     edge.label.cex = 8,      # Large enough for 8000x6000
-     edge.label.color = "black",
+     edge.label.cex = 5,      # Large enough for 8000x6000
+     edge.label.color = E(venice.graph.undirected)$label.color,
      edge.label.family = "sans")
