@@ -175,6 +175,11 @@ From our point of view, this makes it a very interesting case study in how a com
 \item Sotoportegos means "under the portal", meaning under the main entrance to a building, and are covered paths that can be as simple as a passage under a narrow building from one street to the next, or a more complex covered area of a square (like the Piazza San Marco). The scale of these structures is quite small, and the easiness with which they are built proportional to that scale.
 \end{itemize}
 
+Every kind of street has a different name in Venice other than that, but we will not dwell on them here. What we have done is use the Open Street Map description of the city, and obtain a graph using the {\tt osmnx} Python library, which gives us a graph of the city streets. This data has been processed additionally to be obtain the dataset that we have used in this paper, and which is available from the repository \url{https://github.com/JJ/venice-tunnel-bridges} under a free license. OSM labels bridges as well ad {\em tunnels}; we will understand all tunnels as sotoportegos, although many of them will not be calles that way in the street atlas of the city, and will be simply a short segment under a building or a sheltered, covered walkway. This serves our purpose, however, since the function (and their origin) is the same.
+
+What we want to understand in our paper is what kind of function these two kind of ways represent in the urban fabric of the city, and how they relate to the rest of the street. This will allow us to understand better the evolution of the city, and maybe propose solutions for a less crowded and more sustainable future, or simply urban strategies to navigate the city avoiding the worst crowds.
+
+
 bridges account for \Sexpr{percent.bridges}\% of the total number of edges, while {\em sotoportegos} take \Sexpr{percent.sotoportegos}\%.
 
 \section*{Funding and acknowledgements}
