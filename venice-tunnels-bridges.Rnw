@@ -93,6 +93,14 @@ The rest of the paper is organized as follows: next we will present a short stat
 
 \section{Related work}
 
+Despite its complexit and scale, examining cities as complex networks has been the focus of many researchers since early in the history of complex/social network analysis. This has been done for different purposes: \cite{marshall_effect_2011}, for instance, focus on how the street network incluences how people navigate that network, walking, cycling, or using other means or transportation; they conclude that when street density is higher than average citizens are encouraged to walk. Although not directly applicable to Venice, since walking is the only way to get around, to the extent that there are private means of transport through water (that now everyone can afford) as well as public transportation through the main canals, studying the density of the city network or increasing it could be a way of changing the occupation of certain crowded streets in Venice; understanding the network as we do in this paper is a first diagnostic stage that can be later turned into actionable policies.
+
+The density is more important than the scale in cities and, in fact, \cite{hanna_natural_2024} shows that there is a {\em natural} scale that is related to its general network structure, which makes easier to remember specific paths within the city, and thus easier to navigate; this scale is related to what humans can remember, but also to what they are able to walk in a single stage. Although the authors do not apply their findings to Venice, it is quite clear to understand that network structure and also how specific types of edges contribute to that structure will be essential to allow this scale to emerge. 
+
+At any rate, the author that has been able to understand best the structure of Venice and how it arises is Psarra \cite{psarra_venice_2018}
+
+Finally, \cite{hershberg_venice_2023} have studied the role of bridges in Venice as a complex network, and how they are used to connect different parts of the city, as well as how they are used to create new connections between different parts of the city. They have also studied the role of bridges in the evolution of the city, and how they contribute to its evolution. This is a very interesting approach that we will try to follow in this paper, although we will focus on the role of bridges and sotoportegos in the network structure of Venice, and how they contribute to its evolution.
+
 
 \section{Analysis}\label{sec:analysis}
 
