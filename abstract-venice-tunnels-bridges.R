@@ -25,9 +25,6 @@ process_name_vector <- function(name_vector) {
 }
 
 
-
-
-
 load("venice.graph.undirected.Rdata")
 E(venice.graph.undirected)[ E(venice.graph.undirected)$sotoportego != FALSE ]$color <- rgb(0,0,1,.5)
 E(venice.graph.undirected)[ E(venice.graph.undirected)$bridge != FALSE ]$color <- rgb(1,0,0,.5)
@@ -84,3 +81,34 @@ plot(venice.graph.undirected,
      edge.label.cex = 5,      # Large enough for 8000x6000
      edge.label.color = E(venice.graph.undirected)$label.color,
      edge.label.family = "sans")
+
+edge_betweenness_bridges <- E(venice.graph.undirected)[E(venice.graph.undirected)$bridge == TRUE]$betweenness
+edge_betweenness_sotoportegos <- E(venice.graph.undirected)[E(venice.graph.undirected)$sotoportego != FALSE]$betweenness
+edge_betweenness_everything_else <- E(venice.graph.undirected)[E(venice.graph.undirected)$bridge == FALSE & E(venice.graph.undirected)$sotoportego == FALSE]$betweenness
+
+library(ggplot2)
+
+# reorder betweenness in descending order
+bridges_bw_df <- data.frame(
+  rank = 1:length(edge_betweenness_bridges),
+  betweenness = sort(edge_betweenness_bridges, decreasing = TRUE)
+)
+sotoportegos_bw_df <- data.frame(
+  rank = 1:length(edge_betweenness_sotoportegos),
+  betweenness = sort(edge_betweenness_sotoportegos, decreasing = TRUE)
+)
+everything_else_bw_df <- data.frame(
+  rank = 1:length(edge_betweenness_everything_else),
+  betweenness = sort(edge_betweenness_everything_else, decreasing = TRUE)
+)
+
+# plot betweenness in descending order grouped by type with y scale logarithmic
+ggplot() +
+  geom_line(data = bridges_bw_df, aes(x = rank, y = betweenness), color = "red", size = 1) +
+  geom_line(data = sotoportegos_bw_df, aes(x = rank, y = betweenness), color = "blue", size = 1) +
+  geom_line(data = everything_else_bw_df, aes(x = rank, y = betweenness), color = "yellow", size = 1) +
+  scale_y_log10() + scale_x_log10()+
+  labs(title = "Betweenness Centrality of Bridges and Sotoportegos in Venice",
+       x = "Rank (by Betweenness)",
+       y = "Betweenness Centrality (log scale)") +
+  theme_minimal()
