@@ -102,7 +102,6 @@ everything_else_bw_df <- data.frame(
   betweenness = sort(edge_betweenness_everything_else, decreasing = TRUE)
 )
 
-# plot betweenness in descending order grouped by type with y scale logarithmic
 ggplot() +
   geom_line(data = bridges_bw_df, aes(x = rank, y = betweenness), color = "red", size = 1) +
   geom_line(data = sotoportegos_bw_df, aes(x = rank, y = betweenness), color = "blue", size = 1) +
@@ -112,3 +111,14 @@ ggplot() +
        x = "Rank (by Betweenness)",
        y = "Betweenness Centrality (log scale)") +
   theme_minimal()
+
+# Repeat with only x axis going from 1 to 20
+ggplot() +
+  geom_line(data = bridges_bw_df[1:20, ], aes(x = rank, y = betweenness), color = "red", size = 1) +
+  geom_line(data = sotoportegos_bw_df[1:20, ], aes(x = rank, y = betweenness), color = "blue", size = 1) +
+  geom_line(data = everything_else_bw_df[1:20, ], aes(x = rank, y = betweenness), color = "yellow", size = 1) +
+  labs(title = "Betweenness Centrality of Bridges and Sotoportegos in Venice (Top 20)",
+       x = "Rank (by Betweenness)",
+       y = "Betweenness Centrality") +
+  theme_minimal()
+
