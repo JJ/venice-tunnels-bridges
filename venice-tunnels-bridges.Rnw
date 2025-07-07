@@ -88,6 +88,14 @@ Every kind of street has a different name in Venice other than that, but we will
 
 What we want to understand in our paper is what kind of function these two kind of ways represent in the urban fabric of the city, and how they relate to the rest of the street. This will allow us to understand better the evolution of the city, and maybe propose solutions for a less crowded and more sustainable future, or simply urban strategies to navigate the city avoiding the worst crowds.
 
+The rest of the paper is organized as follows: next we will present a short state of the art in urban network analysis; then we will analyze directly the grid in Section \ref{sec:analysis}. This report will conclude with a brief discussion of the results and future lines of work.
+
+
+\section{Related work}
+
+
+\section{Analysis}\label{sec:analysis}
+
 <<statphys.graph.2, echo=FALSE, message=F, fig.height=4, fig.pos="h", fig.cap="Venice street graph. Edge color is red for bridges, blue for underpasses or passages and yellow for everything else.">>=
 eb <- E(venice.graph.undirected)$betweenness
 
