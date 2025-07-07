@@ -53,6 +53,23 @@ process_name_vector <- function(name_vector) {
 
 
 load("venice.graph.undirected.Rdata")
+graph.edges <- E(venice.graph.undirected)
+number.of.edges <- length(graph.edges)
+percent.bridges <- round(length(graph.edges[graph.edges$bridge == T])*100/number.of.edges,2)
+percent.sotoportegos <- round(length(graph.edges[graph.edges$sotoportego != F])*100/number.of.edges,2)
+@
+
+
+\section{Introduction}
+
+Venice is known for its canals\footnote{Although, in reality, there are only 3 {\em canali}: Canareggio, the Gran Canal and the Giudecca Canal. The rest are called {\em rii}, or rivers}, but the most notable feature is that it can (and must) be walked from one point to another. Walking a city gives a totally different perspective to its city grid, giving it a certain scale, but also a lower threshold to make changes in that grid.
+
+From our point of view, this makes it a very interesting case study in how a complex network is created and how it evolves in time; the scale we are talking about means that whatever changes happen, they are bound to be small, local, and thus decentralized. And two kind of urban features stand out as vehicles of those changes\cite{tassini1882curiosita}:\begin{itemize}
+\item Bridges link two walkways; in most cases areas linked by these bridges were not isolated, but simply connected through a more inconvenient path.
+\item Sotoportegos means "under the portal", meaning under the main entrance to a building, and are covered paths that can be as simple as a passage under a narrow building from one street to the next, or a more complex covered area of a square (like the Piazza San Marco). The scale of these structures is quite small, and the easiness with which they are built proportional to that scale.
+\end{itemize}
+
+<<statphys.graph, echo=FALSE, message=F, fig.height=4, fig.pos="h!tbp", fig.cap="Venice street graph. Edge color is red for bridges, blue for underpasses or passages and yellow for everything else.">>=
 E(venice.graph.undirected)[ E(venice.graph.undirected)$sotoportego != FALSE ]$color <- rgb(0,0,1,.5)
 E(venice.graph.undirected)[ E(venice.graph.undirected)$bridge != FALSE ]$color <- rgb(1,0,0,.5)
 venice.graph.undirected <- delete_vertices(venice.graph.undirected, V(venice.graph.undirected)[degree(venice.graph.undirected) == 0])
@@ -62,16 +79,16 @@ E(venice.graph.undirected)$betweenness <- edge_betweenness(venice.graph.undirect
 par(mar=c(0,0,0,0)+.1)
 plot(venice.graph.undirected,vertex.label=NA, vertex.shape="none",
      edge.color=E(venice.graph.undirected)$color,
-     edge.width=1+E(venice.graph.undirected)$betweenness/100000,
-     edge.arrow.size=0, vertex.size=0,
+     edge.width=2, vertex.size=0,
      vertex.frame.color=NA)
+@
 
-graph.edges <- E(venice.graph.undirected)
-number.of.edges <- length(graph.edges)
-percent.bridges <- round(length(graph.edges[graph.edges$bridge == T])*100/number.of.edges,2)
-percent.sotoportegos <- round(length(graph.edges[graph.edges$sotoportego != F])*100/number.of.edges,2)
+Every kind of street has a different name in Venice other than that, but we will not dwell on them here. What we have done is use the Open Street Map description of the city, and obtain a graph using the {\tt osmnx} Python library, which gives us a graph of the city streets. This data has been processed additionally to be obtain the dataset that we have used in this paper, and which is available from the repository \url{https://github.com/JJ/venice-tunnel-bridges} under a free license. OSM labels bridges as well ad {\em tunnels}; we will understand all tunnels as sotoportegos, although many of them will not be calles that way in the street atlas of the city, and will be simply a short segment under a building or a sheltered, covered walkway. This serves our purpose, however, since the function (and their origin) is the same. The bridges account for \Sexpr{percent.bridges}\% of the total number of edges, while {\em sotoportegos} take \Sexpr{percent.sotoportegos}\%. The resulting graph is shown in \ref{fig:statphys.graph}, with different colors depending on the type. Obviously the non-bridge, non-sotoportego dominate it, but in many cases bridges (blue) and sotoportegos (red) show "long-distance" connections indicating connectivity between two disparate nodes in the graph. Please note also the "loops" that connect nodes to themselves.
 
 
+What we want to understand in our paper is what kind of function these two kind of ways represent in the urban fabric of the city, and how they relate to the rest of the street. This will allow us to understand better the evolution of the city, and maybe propose solutions for a less crowded and more sustainable future, or simply urban strategies to navigate the city avoiding the worst crowds.
+
+<<statphys.graph.2, echo=FALSE, message=F, fig.height=4, fig.pos="h", fig.cap="Venice street graph. Edge color is red for bridges, blue for underpasses or passages and yellow for everything else.">>=
 eb <- E(venice.graph.undirected)$betweenness
 
 # Identify sotoportego and bridge edges
@@ -164,22 +181,6 @@ ggplot(all_bw_df, aes(x = betweenness, fill = type)) +
   theme_minimal()
 
 @
-
-\section{Introduction}
-
-Venice is known for its canals\footnote{Although, in reality, there are only 3 {\em canali}: Canareggio, the Gran Canal and the Giudecca Canal. The rest are called {\em rii}, or rivers}, but the most notable feature is that it can (and must) be walked from one point to another. Walking a city gives a totally different perspective to its city grid, giving it a certain scale, but also a lower threshold to make changes in that grid.
-
-From our point of view, this makes it a very interesting case study in how a complex network is created and how it evolves in time; the scale we are talking about means that whatever changes happen, they are bound to be small, local, and thus decentralized. And two kind of urban features stand out as vehicles of those changes\cite{tassini1882curiosita}:\begin{itemize}
-\item Bridges link two walkways; in most cases areas linked by these bridges were not isolated, but simply connected through a more inconvenient path.
-\item Sotoportegos means "under the portal", meaning under the main entrance to a building, and are covered paths that can be as simple as a passage under a narrow building from one street to the next, or a more complex covered area of a square (like the Piazza San Marco). The scale of these structures is quite small, and the easiness with which they are built proportional to that scale.
-\end{itemize}
-
-Every kind of street has a different name in Venice other than that, but we will not dwell on them here. What we have done is use the Open Street Map description of the city, and obtain a graph using the {\tt osmnx} Python library, which gives us a graph of the city streets. This data has been processed additionally to be obtain the dataset that we have used in this paper, and which is available from the repository \url{https://github.com/JJ/venice-tunnel-bridges} under a free license. OSM labels bridges as well ad {\em tunnels}; we will understand all tunnels as sotoportegos, although many of them will not be calles that way in the street atlas of the city, and will be simply a short segment under a building or a sheltered, covered walkway. This serves our purpose, however, since the function (and their origin) is the same.
-
-What we want to understand in our paper is what kind of function these two kind of ways represent in the urban fabric of the city, and how they relate to the rest of the street. This will allow us to understand better the evolution of the city, and maybe propose solutions for a less crowded and more sustainable future, or simply urban strategies to navigate the city avoiding the worst crowds.
-
-
-bridges account for \Sexpr{percent.bridges}\% of the total number of edges, while {\em sotoportegos} take \Sexpr{percent.sotoportegos}\%.
 
 \section*{Funding and acknowledgements}
 This work is supported by the Ministerio espa\~{n}ol de Econom\'{\i}a y
