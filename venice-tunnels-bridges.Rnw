@@ -161,7 +161,7 @@ ggplot(all_bw_df, aes(x = betweenness, fill = type)) +
   scale_x_log10() +
   labs(title = "Edge Betweenness Distribution",
        x = "Edge Betweenness (log scale)",
-       y = "Density") +
+       y = "Kernel Density Estimation") +
   theme_minimal()
 
 @
