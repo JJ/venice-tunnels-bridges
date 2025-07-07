@@ -122,3 +122,16 @@ ggplot() +
        y = "Betweenness Centrality") +
   theme_minimal()
 
+all_bw_df <- rbind(
+  data.frame(type = "Bridge", betweenness = edge_betweenness_bridges),
+  data.frame(type = "Sotoportego", betweenness = edge_betweenness_sotoportegos),
+  data.frame(type = "Everything Else", betweenness = edge_betweenness_everything_else)
+)
+
+ggplot(all_bw_df, aes(x = betweenness, fill = type)) +
+  geom_density(alpha = 0.5) +
+  scale_x_log10() +
+  labs(title = "Edge Betweenness Distribution",
+       x = "Edge Betweenness (log scale)",
+       y = "Density") +
+  theme_minimal()
