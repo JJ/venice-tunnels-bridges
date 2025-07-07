@@ -20,7 +20,7 @@ Dept. of Human Biology, University of Haifa, Israel;
 \abstract{
 
 Venice, renowned for its water channels, is a largely pedestrianized city that has barely changed its configuration in the last 500 years. Several hundred bridges link the islands of Venice represent also one of the few significant changes to the city's network over time, highlighting their crucial role in its urban configuration. Notably, Venice's unique character stems from the largely unplanned and self-organizing nature of its development, which makes it an intriguing subject for study.
-{\em Sotoportegos} (covered walkways) are another prominent urban feature, as shown in Figure \ref{fig:statphys.abs}. Here we will focus on the role these two urban features have in the complex network of Venice streets, what is their status, and which specific type of elements have the highest centrality, trying to explain via historical and statistical research why that is so.
+{\em Sotoportegos} (covered walkways) are another prominent urban feature, as shown in Figure \ref{fig:statphys.abs}. Here we will focus on the role these two urban features have in the complex network of Venice streets, what is their status, and which specific type of elements have the highest centrality, trying to explain via historical and statistical research why that is so.}
 
 \begin{document}
 
@@ -166,15 +166,24 @@ ggplot(all_bw_df, aes(x = betweenness, fill = type)) +
 
 @
 
+\section{Introduction}
+
+Venice is known for its canals\footnote{Although, in reality, there are only 3 {\em canali}: Canareggio, the Gran Canal and the Giudecca Canal. The rest are called {\em rii}, or rivers}, but the most notable feature is that it can (and must) be walked from one point to another. Walking a city gives a totally different perspective to its city grid, giving it a certain scale, but also a lower threshold to make changes in that grid.
+
+From our point of view, this makes it a very interesting case study in how a complex network is created and how it evolves in time; the scale we are talking about means that whatever changes happen, they are bound to be small, local, and thus decentralized. And two kind of urban features stand out as vehicles of those changes\cite{tassini1882curiosita}:\begin{itemize}
+\item Bridges link two walkways; in most cases areas linked by these bridges were not isolated, but simply connected through a more inconvenient path.
+\item Sotoportegos means "under the portal", meaning under the main entrance to a building, and are covered paths that can be as simple as a passage under a narrow building from one street to the next, or a more complex covered area of a square (like the Piazza San Marco). The scale of these structures is quite small, and the easiness with which they are built proportional to that scale.
+\end{itemize}
+
 bridges account for \Sexpr{percent.bridges}\% of the total number of edges, while {\em sotoportegos} take \Sexpr{percent.sotoportegos}\%.
 
 \section*{Funding and acknowledgements}
 This work is supported by the Ministerio espa\~{n}ol de Econom\'{\i}a y
 Competitividad (Spanish Ministry of Competitivity and Economy) under project PID2023-147409NB-C21.
-}
 
-\bibliography{venice,VeniceRef,complex-networks}
+
 \bibliographystyle{plainnat}
+\bibliography{venice,VeniceRef,complex-networks}
 
 
 \end{document}
