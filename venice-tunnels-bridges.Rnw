@@ -99,7 +99,7 @@ The density is more important than the scale in cities and, in fact, \cite{hanna
 
 At any rate, the author that has been able to understand best the structure of Venice and how it arises is Psarra \cite{psarra_venice_2018,psarra_role_2018}, using it as a case study on how to define heritage as something that goes beyond the static and that includes the cultural processes that make the city change and evolve; but, over all, shows how the design of new city buildings or features are optimized for showing a certain image of the city; this image also helps navigability of the city by adding entropy, and thus information to every node where a decision has to be taken.
 
-Since an island city cannot simply expand into the surrounding non-urbanized area \footnote{As a matter of fact, new spaces have been created by accumulating debris to create new islands; however, the lagoon is a fragile environment, and also included in the World Heritage denomination, thus this process cannot simply be carried on indefinitely.}, or rows of houses razed to create a new lane or street, bridges and sotoportegos are the way to go if new connections need to be created. We will study them in the next section.
+Since an island city cannot simply expand into the surrounding non-urbanized area \footnote{As a matter of fact, new spaces have been created by accumulating debris to create new islands; however, the lagoon is a fragile environment, and also included in the World Heritage denomination \cite{tagliapietra2023venice}, thus this process cannot simply be carried on indefinitely.}, or rows of houses razed to create a new lane or street, bridges and sotoportegos are the way to go if new connections need to be created. We will study them in the next section.
 
 
 \section{Analysis}\label{sec:analysis}
@@ -201,10 +201,12 @@ ggplot(all_bw_df, aes(x = betweenness, fill = type)) +
 \section*{Funding and acknowledgements}
 This work is supported by the Ministerio espa\~{n}ol de Econom\'{\i}a y
 Competitividad (Spanish Ministry of Competitivity and Economy) under project PID2023-147409NB-C21.
+\\
+\\
 
 
 \bibliographystyle{plainnat}
-\bibliography{venice,VeniceRef,complex-networks}
+\bibliography{venice,complex-networks}
 
 
 \end{document}
