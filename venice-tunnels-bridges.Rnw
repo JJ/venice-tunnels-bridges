@@ -42,11 +42,11 @@ process_name_vector <- function(name_vector) {
     elements_clean <- str_trim(elements_clean)
 
     # 5. Concatenate with →
-    paste(elements_clean, collapse = " → ")
+    paste(elements_clean, collapse = "|")
   })
 
   # 6. Concatenate with " - " if multiple strings
-  paste(parsed_strings, collapse = " -\n")
+  paste(parsed_strings, collapse = "-\n")
 }
 
 
@@ -101,7 +101,7 @@ Since an island city cannot simply expand into the surrounding non-urbanized are
 
 \section{Analysis}\label{sec:analysis}
 
-<<statphys.graph.edge.bw, echo=FALSE, message=F, warning=F, fig.height=6, fig.pos="h!tb", fig.cap="Venice street graph. Colors as above, edge width is proportional to its betweenness.">>=
+<<statphys.graph.edge.bw, echo=FALSE, message=F, warning=F, fig.height=6, fig.pos="h!tb", fig.cap="Venice street graph. Colors as above, edge width is proportional to its betweenness. MDS layout has been used in this case.">>=
 eb <- E(venice.graph.undirected)$betweenness
 
 # Identify sotoportego and bridge edges
@@ -128,6 +128,7 @@ par(mar=c(0,0,0,0)+.1)
 
 plot(venice.graph.undirected,
      vertex.label=NA,
+     layout=layout_with_mds,
      vertex.shape="none",
      edge.color=E(venice.graph.undirected)$color,
      edge.width=1 + E(venice.graph.undirected)$betweenness / 500000,
@@ -135,15 +136,15 @@ plot(venice.graph.undirected,
      vertex.size=0,
      vertex.frame.color=NA,
      edge.label = E(venice.graph.undirected)$label,
-     edge.label.cex = 0.6,
+     edge.label.cex = 0.5,
      edge.label.color = E(venice.graph.undirected)$label.color,
      edge.label.family = "sans")
 
 @
 
-Since we are interested in the role of certain types of streets in the city, we have used edge betweenness centrality \cite{girvan_community_2002}; since it was originally defined for detecting those links that, if severed, would create isolated (or at least less connected) communities, it will help us understand which edges are encountered more often in a random walk in the city. The resulting graph is shown in \ref{fig:statphys.graph.edge.bw}. Colors follow the same rule as above, and we can see now how wide are the bridges (in red), and how they are also rendered as long lines, indicating that they are connecting nodes far away, in the graph sense, from each other. Exactly the opposite happens with sotoportegos: they are narrow, and barely seen in many cases. The edges with the 5 highest centrality are also shown on the graph.
+Since we are interested in the role of certain types of streets in the city, we have used edge betweenness centrality \cite{girvan_community_2002}; since it was originally defined for detecting those links that, if severed, would create isolated (or at least less connected) communities, it will help us understand which edges are encountered more often in a random walk in the city. The resulting graph is shown in \ref{fig:statphys.graph.edge.bw}. Colors follow the same rule as above, and we can see now how wide are the bridges (in red), and how they are also rendered as long lines, indicating that they are connecting nodes far away, in the graph sense, from each other. Exactly the opposite happens with sotoportegos: they are narrow, and barely seen in many cases. The edges with the 5 highest centrality both for bridges and sotoportegos are also shown on the graph.
 
-This needs a bit of explanation. How Open Street Maps objects is related to their actual names; however, an "edge" in the graph is an uninterrupted segment that goes from one node, which in general will be a junction, to the next. This means that a simple {\em campo} or square might have many nodes and edges, and the opposite, an uninterrupted segment might include several streets. At any rate, the bridges will have one or several segments separated by arrows, 
+This needs a bit of explanation. How Open Street Maps objects is related to their actual names; however, an "edge" in the graph is an uninterrupted segment that goes from one node, which in general will be a junction, to the next. This means that a simple {\em campo} or square might have many nodes and edges, and the opposite, an uninterrupted segment might include several streets. At any rate, the bridges will have one or several segments separated by the symbol "|", sotoportegos, since they join two segments (and not two nodes), will sometimes have two segments separated by "-" and in different lines. That is why labels are so verbose and take so much space in the graph, overlapping. What is interesting, however, is not so much the individual names (which are analyzed elsewhere) but the fact that bridges with a high centrality are close to each other, and that in some cases sotoportegos with the highest betwenness also accompany them; this means that there are actually high-betweenness {\em areas} in the city. 
 
 <<statphys.edgebw, echo=FALSE, message=F, fig.height=4, fig.pos="h", fig.cap="Venice street graph. Edge color is red for bridges, blue for underpasses or passages and yellow for everything else.">>=
 edge_betweenness_bridges <- E(venice.graph.undirected)[E(venice.graph.undirected)$bridge == TRUE]$betweenness
