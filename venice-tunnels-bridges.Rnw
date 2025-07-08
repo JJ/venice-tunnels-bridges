@@ -25,8 +25,6 @@ Dept. of Human Biology, University of Haifa, Israel;
 
 <<statphys.abs, echo=FALSE, message=F, fig.height=4, fig.pos="h", fig.cap="Venice street graph. Edge color is red for bridges, blue for underpasses or passages and yellow for everything else.">>=
 library(igraph)
-## ----statphys.abs, echo=FALSE, message=F, fig.height=4, fig.pos="h", fig.cap="Venice street graph. Edge color is red for bridges, blue for underpasses or passages and yellow for everything else."----
-library(igraph)
 library(stringr)
 
 process_name_vector <- function(name_vector) {
@@ -101,10 +99,9 @@ At any rate, the author that has been able to understand best the structure of V
 
 Since an island city cannot simply expand into the surrounding non-urbanized area \footnote{As a matter of fact, new spaces have been created by accumulating debris to create new islands; however, the lagoon is a fragile environment, and also included in the World Heritage denomination \cite{tagliapietra2023venice}, thus this process cannot simply be carried on indefinitely.}, or rows of houses razed to create a new lane or street, bridges and sotoportegos are the way to go if new connections need to be created. We will study them in the next section.
 
-
 \section{Analysis}\label{sec:analysis}
 
-<<statphys.graph.2, echo=FALSE, message=F, fig.height=4, fig.pos="h", fig.cap="Venice street graph. Edge color is red for bridges, blue for underpasses or passages and yellow for everything else.">>=
+<<statphys.graph.edge.bw, echo=FALSE, message=F, warning=F, fig.height=6, fig.pos="h!tb", fig.cap="Venice street graph. Colors as above, edge width is proportional to its betweenness.">>=
 eb <- E(venice.graph.undirected)$betweenness
 
 # Identify sotoportego and bridge edges
@@ -119,10 +116,10 @@ top5_bridge <- bridge_edges[order(E(venice.graph.undirected)[bridge_edges]$betwe
 E(venice.graph.undirected)$label <- NA
 
 # Assign labels to the selected edges
-E(venice.graph.undirected)[top5_soto]$label <- paste(" 🛤️ ",
+E(venice.graph.undirected)[top5_soto]$label <- paste("S",
   sapply(E(venice.graph.undirected)[top5_soto]$name, process_name_vector))
 
-E(venice.graph.undirected)[top5_bridge]$label <- paste( "🔺",
+E(venice.graph.undirected)[top5_bridge]$label <- paste( "B",
   sapply(E(venice.graph.undirected)[top5_bridge]$name, process_name_vector))
 
 
@@ -133,15 +130,22 @@ plot(venice.graph.undirected,
      vertex.label=NA,
      vertex.shape="none",
      edge.color=E(venice.graph.undirected)$color,
-     edge.width=1 + E(venice.graph.undirected)$betweenness / 100000,
+     edge.width=1 + E(venice.graph.undirected)$betweenness / 500000,
      edge.arrow.size=0,
      vertex.size=0,
      vertex.frame.color=NA,
      edge.label = E(venice.graph.undirected)$label,
-     edge.label.cex = 5,      # Large enough for 8000x6000
+     edge.label.cex = 0.6,
      edge.label.color = E(venice.graph.undirected)$label.color,
      edge.label.family = "sans")
 
+@
+
+Since we are interested in the role of certain types of streets in the city, we have used edge betweenness centrality \cite{girvan_community_2002}; since it was originally defined for detecting those links that, if severed, would create isolated (or at least less connected) communities, it will help us understand which edges are encountered more often in a random walk in the city. The resulting graph is shown in \ref{fig:statphys.graph.edge.bw}. Colors follow the same rule as above, and we can see now how wide are the bridges (in red), and how they are also rendered as long lines, indicating that they are connecting nodes far away, in the graph sense, from each other. Exactly the opposite happens with sotoportegos: they are narrow, and barely seen in many cases. The edges with the 5 highest centrality are also shown on the graph.
+
+This needs a bit of explanation. How Open Street Maps objects is related to their actual names; however, an "edge" in the graph is an uninterrupted segment that goes from one node, which in general will be a junction, to the next. This means that a simple {\em campo} or square might have many nodes and edges, and the opposite, an uninterrupted segment might include several streets. At any rate, the bridges will have one or several segments separated by arrows, 
+
+<<statphys.edgebw, echo=FALSE, message=F, fig.height=4, fig.pos="h", fig.cap="Venice street graph. Edge color is red for bridges, blue for underpasses or passages and yellow for everything else.">>=
 edge_betweenness_bridges <- E(venice.graph.undirected)[E(venice.graph.undirected)$bridge == TRUE]$betweenness
 edge_betweenness_sotoportegos <- E(venice.graph.undirected)[E(venice.graph.undirected)$sotoportego != FALSE]$betweenness
 edge_betweenness_everything_else <- E(venice.graph.undirected)[E(venice.graph.undirected)$bridge == FALSE & E(venice.graph.undirected)$sotoportego == FALSE]$betweenness
@@ -201,7 +205,6 @@ ggplot(all_bw_df, aes(x = betweenness, fill = type)) +
 \section*{Funding and acknowledgements}
 This work is supported by the Ministerio espa\~{n}ol de Econom\'{\i}a y
 Competitividad (Spanish Ministry of Competitivity and Economy) under project PID2023-147409NB-C21.
-\\
 \\
 
 
