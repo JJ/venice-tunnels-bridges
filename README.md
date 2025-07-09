@@ -22,7 +22,9 @@ The code is [embedded in the paper using
 `knitr`](abstract-venice-tunnel-bridges.Rnw).
 
 A report that support the poster can be found [here, including
-code](venice-tunnel-bridges.Rnw]. You will need Rstudio to compile it easily.
+code](venice-tunnel-bridges.Rnw]. You will need Rstudio to compile it
+easily. The [PDF of the paper is included in one of tehe
+releases](https://github.com/JJ/venice-tunnels-bridges/releases/download/v0.999/venice-tunnels-bridges.pdf).
 
 ## LICENSE
 
