@@ -193,8 +193,7 @@ all_bw_df <- rbind(
 ggplot(all_bw_df, aes(x = betweenness, fill = type)) +
   geom_density(alpha = 0.5) +
   scale_x_log10() +
-  labs(title = "Edge Betweenness Distribution",
-       x = "Edge Betweenness (log scale)",
+  labs(       x = "Edge Betweenness (log scale)",
        y = "Kernel Density Estimation") +
   theme_minimal()
 @
@@ -227,8 +226,7 @@ ggplot() +
   geom_line(data = sotoportegos_bw_df, aes(x = normalized_rank, y = betweenness), color = "blue", linewidth = 1) +
   geom_line(data = everything_else_bw_df, aes(x = normalized_rank, y = betweenness), color = "yellow", linewidth = 1) +
   scale_y_log10() + scale_x_log10()+
-  labs(title = "Betweenness Centrality of Bridges and Sotoportegos in Venice",
-       x = "Rank (by Betweenness)",
+  labs(       x = "Rank (by Betweenness)",
        y = "Betweenness Centrality (log scale)") +
   theme_minimal()
 @
@@ -256,6 +254,10 @@ ggplot(sorted_all_betweenness, aes(x=rank , y = betweenness)) +
        y = "Betweenness centrality") +
   theme_minimal()
 @
+
+The distribution of edge betweenness among different types of ways is shown in Figure \ref{fig:statphys.all.betweenness}, where value of edge betweenness is represented as a bar so that it can be perceived more clearly. The light yellow for {\em regular} streets is all over; however, high-betweeenness ranks tend to be redder, indicating that those positions are dominated by bridges, and low value, specially the {\em plateau} around rank 5000 shows a higher proportion of sotoportegos; the "broken stick" part below that plateau has almost no bridges\footnote{Bridges can also have a low betweenness, because in many cases they are simply small walkways over a {\em rio} that connect to a house's main door}, just regular streets and scattered sotoportegos.
+
+Eventually, it is interesting to see how different types of edges are created and contribute to overall connectivity. The {\em scale-free} distribution we observe in the edge betweenness has been created through the addition of bridges mainly; sotoportegos seem to be related more to the adaptation of very small communities, although the fact that all the nodes in the graph are connected implies that in some cases locally made changes will have an impact on the large-scale structure.
 
 
 \section*{Funding and acknowledgements}
