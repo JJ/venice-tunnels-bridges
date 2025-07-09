@@ -319,3 +319,4 @@ figure/
 *.Rproj*
 .Rproj.user
 .Rhistory
+cache/
