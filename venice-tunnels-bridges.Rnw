@@ -69,7 +69,7 @@ From our point of view, this makes it a very interesting case study in how a com
 \item Sotoportegos means "under the portal", meaning under the main entrance to a building, and are covered paths that can be as simple as a passage under a narrow building from one street to the next, or a more complex covered area of a square (like the Piazza San Marco). The scale of these structures is quite small, and the easiness with which they are built proportional to that scale.
 \end{itemize}
 
-<<statphys.graph, echo=FALSE, message=F, fig.height=4, fig.pos="h!tbp", fig.cap="Venice street graph. Edge color is red for bridges, blue for underpasses or passages and yellow for everything else.">>=
+<<statphys.graph, echo=FALSE, message=F, fig.height=4, fig.pos="h!tbp", fig.cap="Venice street graph. Edge color is red for bridges, blue for underpasses or passages and yellow for everything else.", cache = T>>=
 E(venice.graph.undirected)[ E(venice.graph.undirected)$sotoportego != FALSE ]$color <- rgb(0,0,1,.5)
 E(venice.graph.undirected)[ E(venice.graph.undirected)$bridge != FALSE ]$color <- rgb(1,0,0,.5)
 venice.graph.undirected <- delete_vertices(venice.graph.undirected, V(venice.graph.undirected)[degree(venice.graph.undirected) == 0])
@@ -148,7 +148,7 @@ Since we are interested in the role of certain types of streets in the city, we 
 
 This needs a bit of explanation. How Open Street Maps objects is related to their actual names; however, an "edge" in the graph is an uninterrupted segment that goes from one node, which in general will be a junction, to the next. This means that a simple {\em campo} or square might have many nodes and edges, and the opposite, an uninterrupted segment might include several streets. At any rate, the bridges will have one or several segments separated by the symbol "|", sotoportegos, since they join two segments (and not two nodes), will sometimes have two segments separated by "-" and in different lines. That is why labels are so verbose and take so much space in the graph, overlapping. What is interesting, however, is not so much the individual names (which are analyzed elsewhere) but the fact that bridges with a high centrality are close to each other, and that in some cases sotoportegos with the highest betweenness also accompany them; this means that there are actually high-betweenness {\em areas} in the city.
 
-<<statphys.edge.bw.table.sp, echo=FALSE, message=F, fig.height=4, fig.pos="h!tb">>=
+<<statphys.edge.bw.table.sp, echo=FALSE, message=F, fig.pos="h!tb">>=
 top5_sotoportegos <- data.frame(
   name = sapply(E(venice.graph.undirected)[top5_soto]$name, process_name_vector),
   betweenness = E(venice.graph.undirected)[top5_soto]$betweenness
@@ -160,15 +160,14 @@ top5_bridges <- data.frame(
 
 library(kableExtra)
 knitr::kable(top5_sotoportegos,
-  caption="Top 5 sotoportegos by edge betweenness centrality.",
+  caption="Top 5 sotoportego edges by edge betweenness centrality.",
   col.names = c("Name", "Edge Betweenness"), "latex", booktabs = T, fullwidth=F
-) %>% column_spec(1, width = "20em", latex_column_spec = "p{25em}")  %>%
-kable_styling(latex_options = c("striped","hold_position"))
+) %>% column_spec(1, width = "30em", latex_column_spec = "p{32em}") %>% column_spec(2, width = "5em", latex_column_spec = "p{4em}") %>% kable_styling(latex_options = c("striped","hold_position"))
 @
 
-<<statphys.edge.bw.table.bridges, echo=FALSE, message=F, fig.height=4, fig.pos="h!tb">>=
+<<statphys.edge.bw.table.bridges, echo=FALSE, message=F, fig.pos="h!tb">>=
 knitr::kable(top5_bridges,
-  caption="Top 5 bridges by edge betweenness centrality.",
+  caption="Top 5 bridge edges by edge betweenness centrality.",
   col.names = c("Name", "Edge Betweenness"), "latex", booktabs = T
 )
 @
@@ -202,7 +201,7 @@ ggplot(all_bw_df, aes(x = betweenness, fill = type)) +
 
 To visualize the distribution of edge betweenness values we have made a density chart in Figure \ref{fig:statphys.edgebw.density}. Density for bridges is quite different from the others: the peak density is at a higher betweenness. There is a peaklet at a lower density that matches the peaks for the other types of edges. This number corresponds to the number of blind alleys in the city (of which there are quite a few). That is not so important, but the fact is that sotoportegos more or less match the rest of the streets, although their betweenness is lower; it also has a minimal peak at a very low value.
 
-<<statphys.edgebw, echo=FALSE, message=F, warning=F, fig.height=4, fig.pos="h", fig.cap="Overall edge betweenness centrality values for bridges, sotoportegos and everything else.">>=
+<<statphys.edgebw, echo=FALSE, message=F, warning=F, fig.height=3, fig.pos="h", fig.cap="Overall edge betweenness centrality values for bridges, sotoportegos and everything else.">>=
 
 bridges_bw_df <- data.frame(
   rank = 1:length(edge_betweenness_bridges),
@@ -228,19 +227,8 @@ ggplot() +
   theme_minimal()
 @
 
-A log-log rank plot of betweenness is shown in Figure \ref{fig:statphys.edgebw}.
-<<statphys.edgebw.top20, echo=FALSE, message=F, warning=F, fig.height=4, fig.pos="h", fig.cap="Top 20 edge betweenness centrality values for bridges, sotoportegos and everything else.">>=
-# Repeat with only x axis going from 1 to 20
-ggplot() +
-  geom_line(data = bridges_bw_df[1:20, ], aes(x = rank, y = betweenness), color = "red", size = 1) +
-  geom_line(data = sotoportegos_bw_df[1:20, ], aes(x = rank, y = betweenness), color = "blue", size = 1) +
-  geom_line(data = everything_else_bw_df[1:20, ], aes(x = rank, y = betweenness), color = "yellow", size = 1) +
-  labs(title = "Betweenness Centrality of Bridges and Sotoportegos in Venice (Top 20)",
-       x = "Rank (by Betweenness)",
-       y = "Betweenness Centrality") +
-  theme_minimal()
+A log-log rank plot of edge betweenness is shown in Figure \ref{fig:statphys.edgebw}.
 
-@
 
 \section*{Funding and acknowledgements}
 This work is supported by the Ministerio espa\~{n}ol de Econom\'{\i}a y
