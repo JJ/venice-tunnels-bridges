@@ -320,3 +320,4 @@ figure/
 .Rproj.user
 .Rhistory
 cache/
+.RData
