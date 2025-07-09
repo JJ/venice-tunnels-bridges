@@ -172,13 +172,13 @@ knitr::kable(top5_bridges,
 )
 @
 
-Tables \ref{tab:statphys.edge.bw.table.sp} and \ref{tab:statphys.edge.bw.table.bridges} show the top 5 sotoportegos and bridges ranked by edge betweenness centrality; the main purpose is to show that bridges with high betweenness are in the area around the Arsenale, which is a transit area between "popular" areas and one of the city centers; on the other side, sotoportegos with the highest centrality are in very different areas and indeed not very well known. In order to understand why this happens we need to understand the distribution of betweenness centralities among edges.
+Tables \ref{tab:statphys.edge.bw.table.sp} and \ref{tab:statphys.edge.bw.table.bridges} show the top 5 sotoportego and bridge-type edges ranked by edge betweenness centrality; the main purpose is to show that bridges with high betweenness are in the area around the Arsenale, which is a transit area between "popular" areas and one of the city centers; on the other side, sotoportegos with the highest centrality are in very different areas and indeed not very well known.
 
 The betweenness values for bridges, however, is much higher than for sotoportegos, that much is clear from the tables. The top bridge segments tend to cluster in the area that gos from the Riva degli Schiavoni (that is past the Ponte della Paglia, which is just in front of the Bridge of Sighs) up to the Arsenale. It is an interesting area because one of the connections, with the many {\em vaporetto} or public transport stops, is not part of the graph; it also connects the touristic area with the more residential areas of Castello, part of which are filled islands\footnote{The soccer stadium is also in that area, as well as the Giardini della Biennale.}.
 
 The sotoportegos in Table \ref{tab:statphys.edge.bw.table.bridges} are first scattered and then more difficult to pin down. Even a person that knows the city would need to look up in a map. This is telling us that the edge betweenness of these places is {\em lower} than usual, and that they only rose to the top of its category because they connected two nodes with already high betweenness, since edges with high betweenness tend to cluster together, as it can be seen in Figure \ref{fig:statphys.graph.edge.bw}.
 
-<<statphys.edgebw.density, echo=FALSE, message=F, warning=F, fig.height=4, fig.pos="h!tbp", fig.cap="Edge betweenness density graph for sotoportegos, bridges and everything else; colors as usual.">>=
+<<statphys.edgebw.density, echo=FALSE, message=F, warning=F, fig.height=3, fig.pos="h!tbp", fig.cap="Edge betweenness density graph for sotoportegos, bridges and everything else; colors as usual.">>=
 edge_betweenness_bridges <- E(venice.graph.undirected)[E(venice.graph.undirected)$bridge == TRUE]$betweenness
 edge_betweenness_sotoportegos <- E(venice.graph.undirected)[E(venice.graph.undirected)$sotoportego != FALSE]$betweenness
 edge_betweenness_everything_else <- E(venice.graph.undirected)[E(venice.graph.undirected)$bridge == FALSE & E(venice.graph.undirected)$sotoportego == FALSE]$betweenness
@@ -199,7 +199,7 @@ ggplot(all_bw_df, aes(x = betweenness, fill = type)) +
   theme_minimal()
 @
 
-To visualize the distribution of edge betweenness values we have made a density chart in Figure \ref{fig:statphys.edgebw.density}. Density for bridges is quite different from the others: the peak density is at a higher betweenness. There is a peaklet at a lower density that matches the peaks for the other types of edges. This number corresponds to the number of blind alleys in the city (of which there are quite a few). That is not so important, but the fact is that sotoportegos more or less match the rest of the streets, although their betweenness is lower; it also has a minimal peak at a very low value.
+In order to understand why bridges have higher-than-regular betweenness while sotoportegos have lower-than-regular we need to understand the distribution of betweenness centralities among edges. To visualize the distribution of edge betweenness values we have made a density chart in Figure \ref{fig:statphys.edgebw.density}. Density for bridges is quite different from the others: the peak density is at a higher betweenness. There is a peaklet at a lower density that matches the peaks for the other types of edges. This number corresponds to the number of blind alleys in the city (of which there are quite a few). That is not so important, but the fact is that sotoportegos more or less match the rest of the streets, although their betweenness is lower; it also has a minimal peak at a very low value.
 
 <<statphys.edgebw, echo=FALSE, message=F, warning=F, fig.height=3, fig.pos="h", fig.cap="Overall edge betweenness centrality values for bridges, sotoportegos and everything else.">>=
 
@@ -216,10 +216,16 @@ everything_else_bw_df <- data.frame(
   betweenness = sort(edge_betweenness_everything_else, decreasing = TRUE)
 )
 
+# normalize rank by dividing by the number of elements in the data frame
+bridges_bw_df$normalized_rank <- bridges_bw_df$rank / nrow(bridges_bw_df)
+sotoportegos_bw_df$normalized_rank <- sotoportegos_bw_df$rank / nrow(sotoportegos_bw_df)
+everything_else_bw_df$normalized_rank <- everything_else_bw_df$rank / nrow(everything_else_bw_df)
+
+
 ggplot() +
-  geom_line(data = bridges_bw_df, aes(x = rank, y = betweenness), color = "red", linewidth = 1) +
-  geom_line(data = sotoportegos_bw_df, aes(x = rank, y = betweenness), color = "blue", linewidth = 1) +
-  geom_line(data = everything_else_bw_df, aes(x = rank, y = betweenness), color = "yellow", linewidth = 1) +
+  geom_line(data = bridges_bw_df, aes(x = normalized_rank, y = betweenness), color = "red", linewidth = 1) +
+  geom_line(data = sotoportegos_bw_df, aes(x = normalized_rank, y = betweenness), color = "blue", linewidth = 1) +
+  geom_line(data = everything_else_bw_df, aes(x = normalized_rank, y = betweenness), color = "yellow", linewidth = 1) +
   scale_y_log10() + scale_x_log10()+
   labs(title = "Betweenness Centrality of Bridges and Sotoportegos in Venice",
        x = "Rank (by Betweenness)",
@@ -227,7 +233,29 @@ ggplot() +
   theme_minimal()
 @
 
-A log-log rank plot of edge betweenness is shown in Figure \ref{fig:statphys.edgebw}.
+A log-log rank plot of edge betweenness is shown in Figure \ref{fig:statphys.edgebw}; the $x$ axis has been normalized so that all span the same area (approximately; regular streets start to the left since there are many more of them). The appearance of all three charts is similar, following the {\em broken stick} model; however, the slope of bridges streets falls off less than bridges and finally sotoportegos; regular streets have a lower betwenness by rank and finally sotoportegos; bridges literally span the connections between nodes with a high status, while sotoportegos seem to cover connections that have very little value from the point of view of the large-scale structure of the city. We can look at this from a different point of view.
+
+<<statphys.all.betweenness, echo=FALSE, message=F, warning=F, fig.height=3, fig.pos="h!tbp", fig.cap="Ranked edge betweenness centrality for bridges (red), sotoportegos (blue) and everything else (light yellow).">>=
+
+all_betweenness_df <- data.frame(
+  type = ifelse(E(venice.graph.undirected)$bridge == TRUE, "Bridge",
+    ifelse(E(venice.graph.undirected)$sotoportego != FALSE, "Sotoportego", "Regular")),
+  betweenness = E(venice.graph.undirected)$betweenness
+)
+
+sorted_all_betweenness <- all_betweenness_df[order(all_betweenness_df$betweenness, decreasing = TRUE), ]
+sorted_all_betweenness$rank <- 1:nrow(sorted_all_betweenness)
+# use color blue for bridges, red for sotoportegos and yellow for everything else
+sorted_all_betweenness$color <- ifelse(sorted_all_betweenness$type == "Bridge", "red",
+  ifelse(sorted_all_betweenness$type == "Sotoportego", "blue", "lightyellow"))
+
+ggplot(sorted_all_betweenness, aes(x=rank , y = betweenness)) +
+  geom_bar(colour=sorted_all_betweenness$color,stat="identity") +
+  scale_y_log10() +
+  labs(x = "Rank",
+       y = "Betweenness centrality") +
+  theme_minimal()
+@
 
 
 \section*{Funding and acknowledgements}
