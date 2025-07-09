@@ -18,7 +18,11 @@ Data for the paper is in [`venice.graph.undirected.Rdata`](venice.graph.undirect
 
 ## Code and paper source
 
-The code is [embedded in the paper using `knitr`](abstract-venice-tunnel-bridges.Rnw).
+The code is [embedded in the paper using
+`knitr`](abstract-venice-tunnel-bridges.Rnw).
+
+A report that support the poster can be found [here, including
+code](venice-tunnel-bridges.Rnw]. You will need Rstudio to compile it easily.
 
 ## LICENSE
 
