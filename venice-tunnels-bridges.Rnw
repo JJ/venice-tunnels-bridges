@@ -259,6 +259,13 @@ The distribution of edge betweenness among different types of ways is shown in F
 
 Eventually, it is interesting to see how different types of edges are created and contribute to overall connectivity. The {\em scale-free} distribution we observe in the edge betweenness has been created through the addition of bridges mainly; sotoportegos seem to be related more to the adaptation of very small communities, although the fact that all the nodes in the graph are connected implies that in some cases locally made changes will have an impact on the large-scale structure.
 
+\section{Conclusions and future lines of work}
+
+In this report we set out to study the role of two specific Venetian urban types, bridges and sotoportegos, both essential to understand the urban configuration of this pedestrian city; these two types of edges in the city graph are the main way to add new connections to the nodes, since all land is mostly covered and laying out new streets is a very complicated affair, involving mainly covering existing {\em rii} (which would, on the other hand, disconnect parts of the city joined by water).
+
+Using a graph extracted from OpenStreetMaps, what we have have found is that bridges are mainly used to connect high-centrality areas, while sotoportegos are used to connect existing edges (thus creating new "junction" nodes) and thus simply make local navigation a bit more convenient. As a matter of fact you will see that locals (and repeated visitors such as ourselves) tend to use these sotoportegos that connect to small {\em corti} and {\em campielli} to shorten the distance between two points, unlike regular tourists, that usually follow the main streets and squares. But this shows that sotoportegos are essential to the city psicogeography. In both cases, it shows how the city graph is largely self-organizing, another reason that makes Venice a unique city from the point of view of complex networks.
+
+
 
 \section*{Funding and acknowledgements}
 This work is supported by the Ministerio espa\~{n}ol de Econom\'{\i}a y
