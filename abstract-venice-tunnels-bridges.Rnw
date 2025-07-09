@@ -34,7 +34,7 @@ Venice, renowned for its water channels, is a largely pedestrianized city that h
 {\em Sotoportegos} (covered walkways) are another prominent urban feature, as shown in Figure \ref{fig:statphys.abs}; bridges account for \Sexpr{percent.bridges}\% of the total number of edges, while {\em sotoportegos} take \Sexpr{percent.sotoportegos}\%. Here we will focus on the role these two urban features have in the complex network of Venice streets, what is their status, and which specific type of elements have the highest centrality, trying to explain via historical and statistical research why that is so.
 
 {\bf Funding}: This work is supported by the Ministerio espa\~{n}ol de Econom\'{\i}a y
-Competitividad (Spanish Ministry of Competitivity and Economy) under project PID2023-147409NB-C22.
+Competitividad (Spanish Ministry of Competitivity and Economy) under project PID2023-147409NB-C21.
 }
 
 
