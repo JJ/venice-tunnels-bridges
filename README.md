@@ -6,9 +6,9 @@ Repo for the [StatPhys'29](https://statphys29.org) poster *Over the
 bridge, under the gate: analyzingthe role of bridges and underpasses
 in thecomplex network of Venetian streets*, by JJ Merelo and Uri
 Hershberg, focused on network analysis of tunnels and
-bridges. 
+bridges.
 
-Check out the full text by [download the
+Check out the full text by [downloading the
 abstract](https://github.com/JJ/venice-tunnels-bridges/releases/download/v0.9/abstract-venice-tunnels-bridges.pdf)
 or  [the technical report that goes with it](https://digibug.ugr.es/handle/10481/105168).
 
