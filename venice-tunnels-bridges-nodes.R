@@ -77,11 +77,13 @@ E(venice.graph.undirected)[top5_bridge]$label <- paste0( "B", 1:5)
 # Plot with labels visible at high resolution
 par(mar=c(0,0,0,0)+.1)
 
+png("venice-graph-edge-betweenness.png", width=4000, height=3000, res=300)
 plot(venice.graph.undirected,
      vertex.label=NA,
      layout=layout_with_mds,
      vertex.shape="circle",
      vertex.size=V(venice.graph.undirected)$size,
+     vertex.color=V(venice.graph.undirected)$color,
      edge.color=E(venice.graph.undirected)$color,
      edge.width=1 + E(venice.graph.undirected)$betweenness / 500000,
      edge.arrow.size=0,
@@ -89,10 +91,8 @@ plot(venice.graph.undirected,
      edge.label = E(venice.graph.undirected)$label,
      edge.label.cex = 0.4,
      edge.label.family = "sans")
+dev.off()
 
-
-
-## ----statphys.edge.bw.table.sp, echo=FALSE, message=F, fig.pos="h!tb"------------------------------------------------------------------------------
 top5_sotoportegos <- data.frame(
   name = sapply(E(venice.graph.undirected)[top5_soto]$name, process_name_vector),
   betweenness = E(venice.graph.undirected)[top5_soto]$betweenness
